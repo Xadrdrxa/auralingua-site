@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="en">
+  <head style="background-color: rgb(11,11,11);text-decoration:rgb(11,11,11);">
+    <meta name="google-site-verification" content="Lrgu-bkgAQLOsR6PvqXIr7xYbZnR4dNpHFFLv5zxoBs" />
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>body {
+        background-image:url('https://t3.ftcdn.net/jpg/03/61/63/42/360_F_361634280_9EjRGd7a2UsIIycGyXj7c9t0fK81CanC.jpg');
+        background-size: cover ;
+        background-repeat: no-repeat;
+      }</style>
+    <title>german classes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400&display=swap" rel="stylesheet">
+    <style>
+      h1, h2, h3 {font-family: 'Playfair Display', serif;
+        font-weight: 700;}
+        </style>
+  </head>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(function () {
+      // Build the search index from your existing accordion buttons
+      const searchIndex = [];
+      $('#accordionExample [data-toggle="collapse"]').each(function () {
+        const $btn = $(this);
+        const target = $btn.attr('data-target');
+        if (target) {
+          searchIndex.push({
+            title: $btn.text().trim(),
+            target: target
+          });
+        }
+      });
+    
+      const $form     = $('#siteSearchForm');
+      const $input    = $('#siteSearchInput');
+      const $dropdown = $('#searchDropdown');
+    
+      function goToSection(target) {
+        $('#accordionExample .collapse').collapse('hide');
+        $(target).collapse('show');
+        setTimeout(function () {
+          $('html, body').animate({
+            scrollTop: $(target).closest('.card').offset().top - 80
+          }, 400);
+        }, 150);
+        $dropdown.hide();
+        $input.val('');
+      }
+    
+      // Live filtering as the user types
+      $input.on('input', function () {
+        const q = $input.val().trim().toLowerCase();
+        $dropdown.empty();
+      
+        if (!q) {
+          $dropdown.hide();
+          return;
+        }
+      
+        const matches = searchIndex.filter(item =>
+          item.title.toLowerCase().includes(q)
+        );
+      
+        if (matches.length === 0) {
+          $dropdown.append(
+            $('<span>').addClass('list-group-item text-muted').text('No results')
+          );
+        } else {
+          matches.forEach(item => {
+            const $link = $('<a>')
+              .addClass('list-group-item list-group-item-action')
+              .attr('href', '#')
+              .text(item.title)
+              .on('click', function (e) {
+                e.preventDefault();
+                goToSection(item.target);
+              });
+            $dropdown.append($link);
+          });
+        }
+        $dropdown.show();
+      });
+    
+      // Enter / clicking Search jumps to the top match
+      $form.on('submit', function (event) {
+        event.preventDefault();
+        const q = $input.val().trim().toLowerCase();
+        if (!q) return;
+      
+        const match = searchIndex.find(item =>
+          item.title.toLowerCase().includes(q)
+        );
+        if (match) {
+          goToSection(match.target);
+        } else {
+          alert('No section found for "' + $input.val() + '"');
+        }
+      });
+    
+      // Hide dropdown when clicking elsewhere
+      $(document).on('click', function (e) {
+        if (!$form.is(e.target) && $form.has(e.target).length === 0) {
+          $dropdown.hide();
+        }
+      });
+    });
+</script>
+    
+  <body>
+          <div style="background-color:transparent; color: rgb(0, 0, 0);color:white; padding: 10px;">
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" >
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#"></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="http://127.0.0.1:5000" class="navbar navbar-expand-lg navbar-dark bg-dark">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+            more
+          </a>
+          <ul class="dropdown-menu" style="background-color: #1B4332;">
+            <li><a class="dropdown-item" href="#">linkdin</a></li>
+            <li><a class="dropdown-item" href="https://www.instagram.com/auralingua/">Instagram</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="https://www.youtube.com/channel/UCVGjvozm86ljhj_2-XmOwtA">Youtube</a></li>
+          </ul>
+          
+        </li>
+        <li class="nav-item">
+          <a class="nav-link enabled" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" id="siteSearchForm" style="position:relative;">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" id="siteSearchInput" autocomplete="off"/>
+        <button class="btn btn-outline-success" type="submit">Search</button>
+
+         <!-- dropdown list, hidden until you type -->
+        <div id="searchDropdown" class="list-group" style="display:none; position:absolute; top:100%; left:0; width:200px; z-index:1050; max-height:250px; overflow-y:auto;"></div>
+      </form>
+      
+      </div>
+
+     </div>
+
+    </div>
+  <a>
+    <br>
+    <br>
+    <br>
+    <br>    <h2 style="background-color:transparent;padding: 20px;font-size: 90px; color: #1B4332;font-family: 'Playfair Display' ;text-shadow: 10px 10px 10px #1B4332;"><b><center>AuraLingua</center></b></h2>
+    
+      
+    
+  <l1 style="color:#252424; font-size:25px;"><center>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Whether you are a complete beginner or looking to <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;perfect your skills, AuraLingua makes learning German <br>
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;simple, enjoyable, and effective.<br>
+
+   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Start Learning TodayFrom the very beginning</center> </l1>
+  </a>
+  </nav>
+    
+    <br></br>
+    <br></br>
+    <div class="accordion" id="accordionExample">
+      <div class="card"  style="background-color: transparent;">
+        <div class="card-header" id="headingSix">
+          <h3 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix" style="background-color: transparent;color:rgb(255, 255, 255)">
+              TESTIMONIALS
+            </button>
+          </h3>
+        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
+          <div class="card-body" style="background-color: transparent;color:white">
+            <p style="font-size: 30px; padding: 20px;"><b>What our students say?</b></p>
+            <br>
+            <p>
+
+              "AuraLingua completely changed how I learn languages. <br>
+              I went from zero to holding conversations in just 3 months!"<br>
+              — Shravani Kodolikar<br>
+              <br>
+              "The lessons are so clear and easy to follow. <br>
+              I finally feel confident speaking German."<br>
+              — Omkar Bhosle<br>
+              <br>
+              "Best German learning platform I have ever used. <br>
+              Highly recommended!"<br>
+              — Abhinav Sharma </p><br>
+              <br>
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="card"  style="background-color: transparent;">
+        <div class="card-header" id="headingFive">
+          <h3 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive" style="background-color: transparent;color:rgb(252, 252, 252)">
+              ABOUT US
+            </button>
+          </h3>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
+          <div class="card-body" style="background-color: transparent;color:white">
+            <p style="font-size: 30px; padding: 20px;"><b>What is AuraLingua?</b></p>
+            <br>
+            <p>AuraLingua is an online platform designed for people <br>
+                who want to learn German the right way. We combine <br>
+                expert lessons, real life conversations, and proven <br>
+                techniques to help you speak, read, and write German <br>
+                with confidence.<br>
+                
+                From your very first word to fluent conversations, <br>
+                we are with you every step of the way.<br></p>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="background-color: transparent;">
+        <div class="card-header" id="headingOne">
+          <h3 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="background-color: transparent;color:white">
+              LEVELS WE TEACH
+            </button>
+          </h3>
+    
+    
+      <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample" style="background-color: transparent;color:rgb(252, 252, 252)">
+          <div class="card-body" style="background-color: transparent;color:rgb(252, 252, 252)">
+            <p>A1 – Beginner Level
+              ---        Basics of German language
+              ---        Simple conversations
+              ---        Fundamental grammar and vocabulary</p>
+            <p>A2 – Elementary Level
+                    ---         Improved communication skills
+                       ---         Everyday conversation practice
+                           ---         Stronger grammar foundation</p>
+            <p>B1 – Intermediate Level
+                             ---        Confident speaking and writing
+                             ---        Understanding longer texts
+                             ---        Real-life communication skills</p>
+            <p>B2 – Upper Intermediate Level
+                       ---        Advanced grammar and fluency
+                       ---        Professional and academic communication
+                       ---        Exam preparation support</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card"  style="background-color: transparent;">
+        <div class="card-header" id="headingTwo">
+          <h3 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="background-color: transparent;color:rgb(252, 252, 252)">
+              ABOUT THE TEACHER
+            </button>
+          </h3>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+          <div class="card-body" style="background-color: transparent;color:rgb(255, 255, 255)">
+            <li style="font-size: 30px; padding: 20px;"><b>MONALI DHAWARE</b></li>
+            <a href="https://postimg.cc/LhLMHPg6"><img src="https://i.postimg.cc/bYFY9Hzb/monalidhaware-image.jpg" alt="monalidhaware-image" border="0" ></a>
+            <p>Monali Dhaware is a dedicated and experienced German language teacher with over 15 years of teaching expertise. She specializes in guiding students from beginner to advanced levels with a structured and easy-to-understand approach. Her teaching focuses on building strong fundamentals in grammar, vocabulary, and real-life communication skills. Known for her interactive and student-friendly methods, she ensures that every learner gains confidence in speaking, reading, and writing German. Her commitment to student success and personalized attention makes her classes highly effective and engaging.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card" style="background-color: transparent;">
+        <div class="card-header" id="headingThree">
+          <h3 class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree" style="color: white;">
+              CONTACT INFORMATION
+            </button>
+          </h3>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+          <div class="card-body">
+            <section id="contact">
+            <h3 style="color: white;">Contact Information</h3>
+              <p style="color: white;">If you are interested in learning German or would like to enroll in a course, feel free to get in touch. For any queries regarding batches, timings, or demo classes, you can reach out via email.</p>
+
+              <a href="https://mail.google.com/mail/u/0/#search/dhawaremonali%40gmail.com?compose=new" style="color:white"> Email: dhawaremonali@gmail.com</a>
+
+              <p style="color:white">We look forward to helping you begin your German learning journey!</p>
+            </section>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="background-color: transparent; color:white">
+        <div class="card-header" id="headingTwo">
+          <h3class="mb-0">
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour" style="color:white;font-family:'Playfair';">
+              <b> BATCH INFORMATION</b>
+            </button>
+          </h3>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+          <div class="card-body">
+            <section id="batches">
+                 <h3 style="color:white">Batch Information</h3>
+                 <p style="color:white">Flexible batch options are available to suit the needs of students with different schedules. Both weekday and weekend batches are offered, making it convenient for school students as well as working professionals. Classes are conducted in an organized and interactive manner, ensuring consistent progress. Online sessions allow students to learn comfortably from home while maintaining high-quality instruction and engagement.</p>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+  <section id="contact">
+    <h2>Contact Our Teacher</h2>
+
+    <form action="/submit" method="POST">
+
+        <label>Name</label>
+        <input type="text" name="name" required>
+
+        <br><br>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <br><br>
+
+        <label>Phone Number</label>
+        <input type="tel" name="phone">
+
+        <br><br>
+
+        <label>German Level</label>
+        <select name="level">
+            <option>Beginner</option>
+            <option>A1</option>
+            <option>A2</option>
+            <option>B1</option>
+            <option>B2</option>
+            <option>C1</option>
+        </select>
+
+        <br><br>
+
+        <label>Message</label>
+        <textarea name="message"></textarea>
+
+        <br><br>
+
+        <button type="submit">
+            Submit
+        </button>
+
+    </form>
+  </section>
+</html>
